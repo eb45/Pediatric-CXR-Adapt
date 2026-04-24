@@ -1,29 +1,3 @@
-#!/bin/bash
-# =============================================================================
-# Run run_learning_curve.py under SLURM (ResNet or ViT proposed encoder).
-#
-# Choose architecture before submit:
-#   export ARCH=resnet   # default: resnet18 proposed
-#   export ARCH=vit      # vit_b_16 proposed
-#
-# Examples:
-#   cd /hpc/group/naderilab/eb408/ECE685   # your project root
-#   mkdir -p logs
-#   export CONDA_ENV=your_env
-#   export ARCH=vit
-#   sbatch slurm_run_learning_curve.sh
-#
-# Or one line:
-#   sbatch --export=ARCH=vit,CONDA_ENV=your_env slurm_run_learning_curve.sh
-#
-# Optional: pass extra CLI args to the Python script (space-separated):
-#   export EXTRA_LC_ARGS="--max-adult-samples 4000 --lc-adult-epochs 3"
-#   export OUT_DIR=outputs/lc_vit_run1
-#
-# Outputs go to outputs/ (or $OUT_DIR): learning_curve_*_{resnet|vit}.png/csv/json
-# Edit #SBATCH lines for partition, account, time, GPU, memory.
-# =============================================================================
-
 #SBATCH --job-name=cxr-lc
 #SBATCH --output=logs/slurm-lc-%j.out
 #SBATCH --error=logs/slurm-lc-%j.err
@@ -65,7 +39,6 @@ echo "Host: $(hostname)"
 echo "PWD: $(pwd)"
 date
 
-# --- Optional HPC modules ---
 # module purge
 # module load cuda/12.1
 # module load cudnn
