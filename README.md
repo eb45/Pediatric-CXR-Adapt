@@ -40,12 +40,11 @@ flowchart LR
 | ------------------------------------------------------------------------- | ------------------------------------ |
 | **Learning curve** (proposed vs baseline, AUC / F1 vs pediatric fraction) | `python run_learning_curve.py`       |
 |                                                                           | `sbatch slurm_run_learning_curve.sh` |
-| **t-SNE** (pathology before/after FT + adult–pediatric class plot)        | `python run_tsne_alignment.py`       |
 | **DANN** (domain-adversarial fine-tune + eval figures)                    | `python run_dann_viz.py`             |
 |                                                                           | `sbatch slurm_run_dann.sh`           |
 
 
-**Useful flags:** `--arch vit` (ViT-B/16 proposed), `--image-backbone resnet50` (proposed), `--baseline-backbone resnet50` (supervised baseline), `--pediatric-seeds 42 43 44` (error bars in plots).
+**Useful flags:** `--image-backbone resnet50` (proposed), `--baseline-backbone resnet50` (supervised baseline), `--pediatric-seeds 42 43 44` (error bars in plots).
 
 ---
 
@@ -68,9 +67,3 @@ flowchart LR
 - CLIP: Radford et al., ICML 2021  
 - CheXzero-style CXR + text: Tiu et al., *Nat. Biomed. Eng.* 2022  
 - DANN: Ganin et al., arXiv:1505.07818
-
----
-
-## License
-
-Course / research use—follow dataset licenses (NIH CXR-14, Kermany, etc.).
