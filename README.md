@@ -1,6 +1,6 @@
 # Pediatric chest X-ray domain adaptation
 
-CLIP-style **image + text** models trained on **adult NIH** CXR, then **fine-tuned** on a **pediatric** pneumonia vs. normal task—compared to a **pediatric-only ResNet** baseline. Optional **DANN** and **t-SNE** tools help analyze alignment in latent space.
+CLIP-style **image + text** models trained on **adult NIH** CXR, then **fine-tuned** on a **pediatric** pneumonia vs. normal task—compared to a **pediatric-only ResNet** baseline. We additionally explore alternative strategies like **DANN** and **OT**.
 
 ```mermaid
 flowchart LR
@@ -42,6 +42,8 @@ flowchart LR
 |                                                                           | `sbatch slurm_run_learning_curve.sh` |
 | **DANN** (domain-adversarial fine-tune + eval figures)                    | `python run_dann_viz.py`             |
 |                                                                           | `sbatch slurm_run_dann.sh`           |
+| **OT-Wasserstein(SWD)**                                                   | `python run_ot_learning_curve.py`    |
+|                                                                           | `sbatch slurm_run_ot.sh`             |
 
 
 **Useful flags:** `--image-backbone resnet50` (proposed), `--baseline-backbone resnet50` (supervised baseline), `--pediatric-seeds 42 43 44` (error bars in plots).
