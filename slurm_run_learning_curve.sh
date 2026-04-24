@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #SBATCH --job-name=cxr-lc
 #SBATCH --output=logs/slurm-lc-%j.out
 #SBATCH --error=logs/slurm-lc-%j.err
@@ -7,8 +9,6 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH --gres=gpu:1
-##SBATCH --partition=gpu
-##SBATCH --account=your_account
 
 set -euo pipefail
 
@@ -39,10 +39,6 @@ echo "Host: $(hostname)"
 echo "PWD: $(pwd)"
 date
 
-# module purge
-# module load cuda/12.1
-# module load cudnn
-
 if [[ -n "${CONDA_SH:-}" ]]; then
   # shellcheck source=/dev/null
   source "${CONDA_SH}"
@@ -59,19 +55,19 @@ if [[ -n "${CONDA_ENV:-}" ]]; then
 fi
 
 export PYTHONUNBUFFERED=1
-# export CXR_PATH_REMAP='{"\/old\/prefix":"\/new\/prefix"}'
 
 OUT_DIR_ARGS=()
 if [[ -n "${OUT_DIR:-}" ]]; then
   OUT_DIR_ARGS=(--out-dir "${OUT_DIR}")
 fi
 
-# shellcheck disable=SC2086
-# EXTRA_LC_ARGS is intentionally unquoted so users can pass multiple flags.
+EXTRA_LC_ARGS="${EXTRA_LC_ARGS:---pediatric-seeds 42 43 44}"
+echo "EXTRA_LC_ARGS: ${EXTRA_LC_ARGS}"
+
 python run_learning_curve.py \
   --arch "${ARCH}" \
   "${OUT_DIR_ARGS[@]}" \
-  ${EXTRA_LC_ARGS:-}
+  ${EXTRA_LC_ARGS}
 
 echo "Finished OK"
 date
