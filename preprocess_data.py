@@ -1,30 +1,4 @@
 #!/usr/bin/env python3
-"""
-Prepare CXR data for ViT + BERT training:
-
-  • NIH ChestX-ray14 (adult): binary pneumonia vs. not pneumonia from Data_Entry_2017.csv
-  • Pediatric (Kermany / Kaggle layout): train/test[/val], NORMAL vs PNEUMONIA folders
-
-Keep this script in your project root (next to requirements.txt / data/).
-
---nih-dir / --chestxray14-dir defaults to <project>/data/nih
-  (Data_Entry_2017.csv + images/ and/or images_001/ ... images_012/).
-  If train_val_list.txt and test_list.txt exist, split is train_val vs test; else split train.
---data-dir defaults to ./data/chest_xray relative to cwd (override with /work/... if needed).
---output-dir defaults to <project>/data/processed.
-
-Writes to --output-dir:
-  - adult_manifest.csv (NIH), pediatric_manifest.csv (pediatric)
-  - bert_prompt_tokens.pt, vit_image_config.json
-
-Optional: --cache-images → tensor shards under output-dir/cache/
-
-  python preprocess_data.py
-  python preprocess_data.py --chestxray14-dir /work/.../nih --data-dir /work/.../chest_xray
-  python preprocess_data.py --skip-nih          # pediatric only
-  python preprocess_data.py --skip-pediatric    # NIH only
-  python preprocess_data.py --download-pediatric
-"""
 
 from __future__ import annotations
 
