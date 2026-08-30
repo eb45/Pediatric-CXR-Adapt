@@ -63,13 +63,14 @@ flowchart LR
 
 ---
 
-# Results
+## Results summary
 
-Method	AUC-ROC	F1 (0.5)	Sensitivity	Specificity
-Baseline (pediatric-only, ResNet-50)	0.8745	0.8090	–	–
-Text-anchor (ResNet-50)	0.9394	0.8224	0.997	0.286
-DANN	0.9242	0.8600	0.997	0.462
-OT (Wasserstein)	0.9508	0.8571	1.0000	0.444
+| Method | AUC-ROC | F1 (0.5) | Sensitivity | Specificity |
+|---|---|---|---|---|
+| Baseline (pediatric-only, ResNet-50) | 0.8745 | 0.8090 | – | – |
+| Text-anchor (ResNet-50) | 0.9394 | 0.8224 | 0.997 | 0.286 |
+| DANN | 0.9242 | 0.8600 | 0.997 | 0.462 |
+| OT (Wasserstein) | **0.9508** | 0.8571 | 1.0000 | 0.444 |
 
 Adult contrastive pretraining beats the pediatric-only baseline across the board, and the gap is largest when pediatric fine-tuning data is scarce, so the pretrained text anchors are doing real work as an initialization, not just adding parameters. Encoder capacity matters as much as the pretraining scheme: ResNet-18 underperforms the baseline despite the same adult pretraining, while ResNet-50 clears it by a wide margin, so representational capacity is a precondition for transfer, not a detail.
 
