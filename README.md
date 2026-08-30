@@ -61,6 +61,19 @@ flowchart LR
 | `cxr_eval_viz.py`    | ROC, PR, confusion, calibration, Grad-CAM hooks, etc.      |
 | `preprocess_data.py` | Build manifests + prompt tensors                           |
 
+---
+
+# Results
+
+Method	AUC-ROC	F1 (0.5)	Sensitivity	Specificity
+Baseline (pediatric-only, ResNet-50)	0.8745	0.8090	–	–
+Text-anchor (ResNet-50)	0.9394	0.8224	0.997	0.286
+DANN	0.9242	0.8600	0.997	0.462
+OT (Wasserstein)	0.9508	0.8571	1.0000	0.444
+
+Adult contrastive pretraining beats the pediatric-only baseline across the board, and the gap is largest when pediatric fine-tuning data is scarce, so the pretrained text anchors are doing real work as an initialization, not just adding parameters. Encoder capacity matters as much as the pretraining scheme: ResNet-18 underperforms the baseline despite the same adult pretraining, while ResNet-50 clears it by a wide margin, so representational capacity is a precondition for transfer, not a detail.
+
+Across alignment strategies, no single method dominates on every axis. Text-anchoring gives the cleanest semantic separation (see the t-SNE plots) and the simplest inference path (nearest-prompt lookup, no extra classifier). DANN and OT both push specificity higher than text-anchoring at the default threshold, with OT edging out AUC-ROC overall, suggesting distributional alignment captures a slightly different piece of the domain shift than semantic grounding does. In practice this points to combining objectives (e.g., text-anchored loss plus a distribution-matching term) rather than treating them as competitors, and to picking the alignment strategy based on deployment priorities: sensitivity-critical screening favors the text-anchor or OT operating points, while settings where false positives are costly favor DANN's more balanced boundary.
 
 ---
 
